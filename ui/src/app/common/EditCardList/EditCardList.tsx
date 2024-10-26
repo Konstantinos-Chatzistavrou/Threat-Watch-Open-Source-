@@ -97,6 +97,7 @@ export const EditCardList = ({
                     <IonNavLink
                       routerDirection={"forward"}
                       component={() => (
+                          // @ts-ignore
                         <ArticleDetails a={article} />
                       )}
                     >

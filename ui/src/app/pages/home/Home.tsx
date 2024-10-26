@@ -223,7 +223,7 @@ export const Home: React.FC = () => {
           </IonRow>
             <IonRow>
                 <IonCol size='12'>
-                    <IonText color="light"><h2>News</h2></IonText>
+                    <IonText><h2>News</h2></IonText>
                 </IonCol>
                     {newsArticles.map((article) => renderNews(article))}
                 <IonInfiniteScroll

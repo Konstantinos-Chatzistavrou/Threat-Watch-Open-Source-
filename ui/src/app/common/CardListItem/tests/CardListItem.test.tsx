@@ -16,7 +16,7 @@ test("renders title and localized date string", async () => {
 function setup(customProps?: Partial<CardListItemProps>) {
   const defaultProps: CardListItemProps = {
     title: "CardListItem Title",
-    date: new Date().toISOString(),
+    date: new Date(),
   };
 
   render(

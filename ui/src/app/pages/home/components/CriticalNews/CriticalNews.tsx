@@ -138,7 +138,7 @@ export const CriticalNews = ({ articles }: CriticalNewsProps) => {
         </IonCol>
         <IonCol size={"6"}>
           <IonRow>
-            <IonLabel color="light">{homeContent.criticalNews.heading}</IonLabel>
+            <IonLabel>{homeContent.criticalNews.heading}</IonLabel>
           </IonRow>
         </IonCol>
         <IonCol/>

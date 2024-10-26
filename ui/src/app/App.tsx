@@ -31,7 +31,7 @@ import {
 import {IonReactRouter} from "@ionic/react-router";
 import {Bookmarks} from "@pages/bookmarks";
 import Courses from "@pages/courses/Courses";
-import {Downloads} from "@pages/downloads";
+// import {Downloads} from "@pages/downloads";
 import {Home} from "@pages/home";
 import Settings from "@pages/settings";
 import {bookmark, download, home, settings} from "ionicons/icons";
@@ -52,6 +52,7 @@ const App: React.FC = () => (
             <Home />
           </Route>
           <Route exact path="/article">
+            {/*@ts-ignore*/}
             <ArticleDetails />
           </Route>
           <Route exact path="/bookmarks">
@@ -60,9 +61,9 @@ const App: React.FC = () => (
           <Route exact path="/settings">
             <Settings />
           </Route>
-          <Route exact path="/downloads">
-            <Downloads />
-          </Route>
+          {/*<Route exact path="/downloads">*/}
+          {/*  <Downloads />*/}
+          {/*</Route>*/}
           <Route exact path="/courses">
             <Courses />
           </Route>

@@ -12,13 +12,16 @@ export const ArticleDetails = (a:Article) => {
 
   return (
     <IonPage>
-      <Header title={"Article Source Title"} inModal={true} />
+      <Header title={article.title} inModal={true} />
       <IonContent>
         <IonGrid>
           <IonRow>
-            <IonText color={"light"}>
+            <IonText>
               <h1>{article.title}</h1>
               <p>
+                {"Source: "}
+                <a href={"https://"+article.source}>{article.source}</a>
+                <br/>
                 {articleDetails.writtenBy}
                 {article.author}
                 <br />
@@ -35,12 +38,12 @@ export const ArticleDetails = (a:Article) => {
             />
           </IonRow>
           <IonRow>
-            <IonText color={"light"}>
+            <IonText>
               <h3>{article.description}</h3>
             </IonText>
           </IonRow>
           <IonRow>
-            <IonText color={"light"}>
+            <IonText color={"black"}>
               <p>{article.summary}</p>
             </IonText>
           </IonRow>

@@ -19,14 +19,14 @@ test("turning on edit mode displays checkboxes", async () => {
   const toggleEditBtn = await screen.findByTestId(testId.toggleEditBtn);
   expect(toggleEditBtn).toBeVisible();
 
-  for (const { id } of defaultProps.cardItemsData) {
-    expect(screen.queryByTestId(`${testId.itemCheckbox}-${id}`)).toBeNull();
+  for (const { _id } of defaultProps.cardItemsData) {
+    expect(screen.queryByTestId(`${testId.itemCheckbox}-${_id}`)).toBeNull();
   }
 
   await user.click(toggleEditBtn);
 
-  for (const { id } of defaultProps.cardItemsData) {
-    expect(screen.getByTestId(`${testId.itemCheckbox}-${id}`)).toBeVisible();
+  for (const { _id } of defaultProps.cardItemsData) {
+    expect(screen.getByTestId(`${testId.itemCheckbox}-${_id}`)).toBeVisible();
   }
 });
 
@@ -37,13 +37,13 @@ test("turning off edit mode hides checkboxes and calls function to clear selecti
   expect(toggleEditBtn).toBeVisible();
 
   await user.click(toggleEditBtn);
-  for (const { id } of defaultProps.cardItemsData) {
-    expect(screen.getByTestId(`${testId.itemCheckbox}-${id}`)).toBeVisible();
+  for (const { _id } of defaultProps.cardItemsData) {
+    expect(screen.getByTestId(`${testId.itemCheckbox}-${_id}`)).toBeVisible();
   }
 
   await user.click(toggleEditBtn);
-  for (const { id } of defaultProps.cardItemsData) {
-    expect(screen.queryByTestId(`${testId.itemCheckbox}-${id}`)).toBeNull();
+  for (const { _id } of defaultProps.cardItemsData) {
+    expect(screen.queryByTestId(`${testId.itemCheckbox}-${_id}`)).toBeNull();
   }
 
   expect(defaultProps.clearSelectedItems).toBeCalledTimes(1);
@@ -86,9 +86,9 @@ function setup(customProps?: Partial<EditCardListProps>) {
   const defaultProps: EditCardListProps = {
     pageTitle: "EditCardList Title",
     cardItemsData: [...Array(3)].map((_, i) => ({
-      id: i,
+      _id: ""+i,
       title: `Title ${i}`,
-      date: new Date().toISOString(),
+      date: new Date(),
     })),
     handleRemoveItem: vi.fn(),
     alertHeaderMessage: "Test alert message",
