@@ -1,0 +1,45 @@
+.article-container {
+  --background: var(--ion-color-dark) !important;
+}
+
+.article-title {
+  font-size: 24px;
+  color: var(--ion-color-light);
+  margin-top: 7px;
+  margin-bottom: 5px;
+}
+
+.article-subtitle {
+  font-size: 14px;
+  color: var(--ion-color-light);
+  margin-bottom: 10px;
+}
+.article-description {
+  font-size: 20px;
+  font-weight: normal;
+  color: var(--ion-color-light);
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.article-summary {
+  font-size: 16px;
+  color: var(--ion-color-light);
+}
+.article-image-div {
+  position: relative;
+}
+
+.article-image {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.bookmark-icon-div {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.bookmark-icon {
+  color: yellow;
+  font-size: 24px;
+}
