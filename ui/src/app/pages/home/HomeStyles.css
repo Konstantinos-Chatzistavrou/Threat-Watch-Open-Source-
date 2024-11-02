@@ -14,7 +14,7 @@
 }
 
 .news-feed-card-image {
-  width: "80%";
+  width: "100%";
   max-height: "40%";
   object-fit: "contain";
 }

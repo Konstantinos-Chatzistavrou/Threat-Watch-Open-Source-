@@ -1,0 +1,23 @@
+.critical-news-contenet-div {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 10px;
+}
+.critical-news-card-image {
+  width: 14rem;
+  height: 10rem;
+  object-fit: cover;
+}
+.critical-news-star-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.critical-news-card-title {
+  color: var(--ion-color-light);
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

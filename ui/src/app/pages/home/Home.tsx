@@ -21,6 +21,7 @@ import {
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { sparkles, star, syncCircle } from "ionicons/icons";
+
 import { CriticalNews } from "./components/CriticalNews";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -142,13 +143,12 @@ export const Home: React.FC = () => {
       <IonCol size="12" key={_id}>
         <IonCard className={"ion-no-margin news-feed-card"}>
           <div className="news-feed-card-contenet-div">
-            <div>
-              <img
-                alt="security-thumbnail"
-                src={media || gridLockImage}
-                onClick={() => onArticleClick(_id)}
-              />
-            </div>
+            <img
+              alt="security-thumbnail"
+              src={media || gridLockImage}
+              onClick={() => onArticleClick(_id)}
+            />
+
             <div>
               <IonCardTitle
                 onClick={() => onArticleClick(_id)}
