@@ -1,120 +1,142 @@
-import {Article} from "@/app/api/articleApi/ArticleTypes";
-import {buildElementId} from "@/app/utils/idUtils";
+import { Article } from "@/app/api/articleApi/ArticleTypes";
+import { buildElementId } from "@/app/utils/idUtils";
 import Button from "@common/Button/Button";
 import homeContent from "@content/home.json";
-import {IonCard, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonLabel, IonRow,} from "@ionic/react";
-import {caretDownCircle, caretForwardCircle, star,} from "ionicons/icons";
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCol,
+  IonGrid,
+  IonLabel,
+  IonRow,
+} from "@ionic/react";
+import { caretDownCircle, caretForwardCircle, star } from "ionicons/icons";
 import "swiper/swiper-bundle.min.css";
 
 import "swiper/swiper.min.css";
-import React, {useEffect, useState} from "react";
-import {Swiper, SwiperSlide} from "swiper/react";
+import React, { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import gridLockImage from "@assets/grid-lock.jpeg";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import "./CriticalNews.css";
 
 export const CriticalNews = ({ articles }: CriticalNewsProps) => {
-    const history = useHistory();
-    const [bookmarks,setBookmarks] = useState<string[]>([]);
-    const [showSwiper, setShowSwiper] = useState(false);
+  const history = useHistory();
+  const [bookmarks, setBookmarks] = useState<string[]>([]);
+  const [showSwiper, setShowSwiper] = useState(false);
   const [criticalArticles, setCriticalArticles] = useState<Article[]>(articles);
 
-    useEffect(() => {
-        if(articles){
-            setCriticalArticles(articles);
-        }
-    }, [articles]);
-
-    useEffect(() => {
-        const localStorageItem = localStorage.getItem('criticalBookmarkedArticles');
-        if(localStorageItem !== null){
-            setBookmarks(JSON.parse(localStorageItem));
-        }
-    },[]);
-    const onArticleClick = (id: string) => {
-        console.log(id);
-        const article = articles.find((article) => article._id === id);
-        console.log(article);
-        return history.push({pathname:'/article',state:{article:article}});
+  useEffect(() => {
+    if (articles) {
+      setCriticalArticles(articles);
     }
+  }, [articles]);
 
-    const handleBookmarkArticles = () => {
-        const articlesCopy = criticalArticles.map((article) => {
-            if(bookmarks.includes(article._id)){
-                return {...article, isBookmarked:true};
-            }
-            return {...article, isBookmarked:false};
-        });
-        setCriticalArticles(articlesCopy);
+  useEffect(() => {
+    const localStorageItem = localStorage.getItem("criticalBookmarkedArticles");
+    if (localStorageItem !== null) {
+      setBookmarks(JSON.parse(localStorageItem));
     }
+  }, []);
+  const onArticleClick = (id: string) => {
+    console.log(id);
+    const article = articles.find((article) => article._id === id);
+    console.log(article);
+    return history.push({ pathname: "/article", state: { article: article } });
+  };
 
-    useEffect(() => {
-        if(bookmarks.length > 0){
-            handleBookmarkArticles();
-        }
-        }, [bookmarks]);
+  const handleBookmarkArticles = () => {
+    const articlesCopy = criticalArticles.map((article) => {
+      if (bookmarks.includes(article._id)) {
+        return { ...article, isBookmarked: true };
+      }
+      return { ...article, isBookmarked: false };
+    });
+    setCriticalArticles(articlesCopy);
+  };
 
-    const handleBookmark = (id: string) => () => {
-        console.log(bookmarks);
-        if(!bookmarks.includes(id)){
-            const bookmarkedArticles = [id, ...bookmarks];
-            localStorage.setItem('criticalBookmarkedArticles', JSON.stringify(bookmarkedArticles));
-            setBookmarks(bookmarkedArticles);
-        } else {
-            let bookmarkedArticles = bookmarks;
-            bookmarkedArticles = bookmarkedArticles?.filter((articleId: string) => articleId !== id);
-            localStorage.setItem('criticalBookmarkedArticles', JSON.stringify(bookmarkedArticles));
-            setBookmarks(bookmarkedArticles);
-        }
+  useEffect(() => {
+    if (bookmarks.length > 0) {
+      handleBookmarkArticles();
     }
+  }, [bookmarks]);
 
-    const renderCriticalNews = ({ title, _id, media, isBookmarked }: Article) => {
-        return (
-            <IonCard
-                className={"ion-no-margin ion-margin-end"}
-                key={_id}
-                style={{
-                    maxWidth: "15rem",
-                    maxHeight: "20rem",
-                    height:"100%",
-                }}
-                data-testid={`${testId.criticalNewsArticle}-${_id}`}
+  const handleBookmark = (id: string) => () => {
+    console.log(bookmarks);
+    if (!bookmarks.includes(id)) {
+      const bookmarkedArticles = [id, ...bookmarks];
+      localStorage.setItem(
+        "criticalBookmarkedArticles",
+        JSON.stringify(bookmarkedArticles)
+      );
+      setBookmarks(bookmarkedArticles);
+    } else {
+      let bookmarkedArticles = bookmarks;
+      bookmarkedArticles = bookmarkedArticles?.filter(
+        (articleId: string) => articleId !== id
+      );
+      localStorage.setItem(
+        "criticalBookmarkedArticles",
+        JSON.stringify(bookmarkedArticles)
+      );
+      setBookmarks(bookmarkedArticles);
+    }
+  };
+
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Renders a single critical news article.
+   * @param {Article} article The article to render.
+   * @returns {JSX.Element} A rendered critical news article.
+   */
+  /******  2d3a769b-e481-4497-b5a2-05ca72e03160  *******/
+  const renderCriticalNews = ({ title, _id, media, isBookmarked }: Article) => {
+    return (
+      <IonCard
+        className={"ion-margin-start ion-padding"}
+        key={_id}
+        style={{
+          maxWidth: "15rem",
+          maxHeight: "17rem",
+          height: "100%",
+        }}
+        data-testid={`${testId.criticalNewsArticle}-${_id}`}
+      >
+        <div className="critical-news-contenet-div">
+          <img
+            alt="security-thumbnail"
+            src={media || gridLockImage}
+            onClick={() => onArticleClick(_id)}
+            className="critical-news-card-image"
+          />
+          <div>
+            <IonCardTitle
+              onClick={() => onArticleClick(_id)}
+              className="critical-news-card-title"
             >
-                <img
-                    alt="security-thumbnail"
-                    src={media || gridLockImage}
-                    onClick={()=>onArticleClick(_id)}
-                    style={{
-                        width: "100%",
-                        maxHeight: "40%",
-                        objectFit: "contain"
-                    }}
-                />
-
-                <IonCardHeader>
-                    <IonRow>
-                        <IonCardTitle onClick={()=>onArticleClick(_id)}>{title}</IonCardTitle>
-                        <IonCol>
-                            <Button
-                                type="icon"
-                                ariaLabel={`favorite-btn-${_id}`}
-                                classes={"small-square ion-float-bottom"}
-                                ionButtonProps={{
-                                    size: "small",
-                                    // shape: "round",
-                                    onClick: handleBookmark(_id),
-                                }}
-                                ionIconProps={{
-                                    icon: star,
-                                    size: "small",
-                                    color: isBookmarked ? "yellow":"white"
-                                }}
-                            />
-                        </IonCol>
-                    </IonRow>
-                </IonCardHeader>
-            </IonCard>
-        );
-    }
+              {title}
+            </IonCardTitle>
+            <Button
+              type="icon"
+              ariaLabel={`favorite-btn-${_id}`}
+              classes={"small-square ion-float-bottom critical-news-star-icon"}
+              ionButtonProps={{
+                size: "small",
+                // shape: "round",
+                onClick: handleBookmark(_id),
+              }}
+              ionIconProps={{
+                icon: star,
+                size: "small",
+                color: isBookmarked ? "yellow" : "white",
+              }}
+            />
+          </div>
+        </div>
+      </IonCard>
+    );
+  };
 
   return (
     <IonGrid class={"ion-no-padding"}>
@@ -141,7 +163,7 @@ export const CriticalNews = ({ articles }: CriticalNewsProps) => {
             <IonLabel>{homeContent.criticalNews.heading}</IonLabel>
           </IonRow>
         </IonCol>
-        <IonCol/>
+        <IonCol />
       </IonRow>
       <IonRow
         class={!showSwiper ? "ion-hide" : ""}
@@ -149,7 +171,7 @@ export const CriticalNews = ({ articles }: CriticalNewsProps) => {
       >
         <Swiper slidesPerView={"auto"}>
           {criticalArticles.map((article) => (
-            <SwiperSlide key={article.url} style={{ width:"max-content" }}>
+            <SwiperSlide key={article.url} style={{ width: "max-content" }}>
               {renderCriticalNews(article)}
             </SwiperSlide>
           ))}
@@ -163,10 +185,11 @@ interface CriticalNewsProps {
   articles: Article[];
 }
 
-const prefixId = (name: string) => buildElementId("home", "critical-news", name);
+const prefixId = (name: string) =>
+  buildElementId("home", "critical-news", name);
 export const testId = {
-    criticalNewsArticle: prefixId("critical-news"),
-    moreInfoBtn: prefixId("more-info"),
+  criticalNewsArticle: prefixId("critical-news"),
+  moreInfoBtn: prefixId("more-info"),
   popoverContent: prefixId("popover-content"),
   swiperContainer: prefixId("swiper-container"),
 };
