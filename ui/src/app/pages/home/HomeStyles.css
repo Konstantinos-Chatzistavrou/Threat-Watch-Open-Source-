@@ -1,0 +1,30 @@
+.news-feed-card {
+  margin-bottom: 10px;
+}
+.news-feed-card-contenet-div {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 10px;
+}
+.news-feed-card-star-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.news-feed-card-image {
+  width: "80%";
+  max-height: "40%";
+  object-fit: "contain";
+}
+
+.news-feed-card-title {
+  color: var(--ion-color-light);
+  font-size: 18px;
+}
+
+.news-feed-card-author {
+  color: var(--ion-color-dark);
+  font-size: 14px;
+}
