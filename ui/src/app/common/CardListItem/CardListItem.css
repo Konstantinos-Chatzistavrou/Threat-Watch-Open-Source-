@@ -1,0 +1,36 @@
+.bookmark-card-container {
+  width: "100%";
+  display: flex;
+  flex-direction: row;
+  background-color: #4ca7be;
+  border-radius: 10px;
+}
+
+.bookmark-image {
+  width: 120px;
+  height: 103px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.bookmark-data-div {
+  margin-left: 10px;
+  padding: 10px;
+}
+
+.bookmark-title {
+  color: var(--ion-color-dark);
+}
+
+.bookmark-date-div {
+  margin-top: 10px;
+  color: var(--ion-color-dark);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bookmark-date-date {
+  margin-left: 5px;
+}
