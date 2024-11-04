@@ -4,58 +4,40 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
+  IonGrid,
   IonIcon,
   IonRow,
   IonText,
 } from "@ionic/react";
 import { timeSharp } from "ionicons/icons";
 import React from "react";
+import "./CardListItem.css";
 
 export interface CardListItemProps {
   title: string;
   date: Date;
+  media: string;
 }
 
-const CardListItem = ({ title, date }: CardListItemProps) => {
+const CardListItem = ({ title, date, media }: CardListItemProps) => {
   return (
-    <IonCard
-      className={"ion-no-margin"}
-      style={{
-        width: "100%",
-        border: "1px solid black",
-      }}
-    >
-      <IonRow className={"ion-justify-content-between ion-padding"}>
-        <div style={{ transform: "scale(1,1)" }}>
-          <IonCardHeader className={"ion-no-padding"}>
-            <IonCardTitle>{title}</IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent
-            className={"ion-no-padding"}
-            style={{
-              position: "fixed",
-              bottom: 0,
-            }}
-          >
-            <IonRow className={"ion-align-items-center"}>
-              <IonIcon icon={timeSharp} style={{ padding: "0 2px 0 0" }} />
-              <IonText color={"medium"}>
-                {new Date(date).toLocaleDateString()}
-              </IonText>
-            </IonRow>
-          </IonCardContent>
-        </div>
+    <div className="bookmark-card-container">
+      <img alt={"alt"} src={media} className="bookmark-image" />
 
-        <img
-          alt={"alt"}
-          src={gridLockImage}
-          style={{
-            width: "120px",
-            maxHeight: "103px",
-          }}
-        />
-      </IonRow>
-    </IonCard>
+      <div className="bookmark-data-div">
+        <IonText className="bookmark-title">{title}</IonText>
+        <div className="bookmark-date-div">
+          <IonIcon
+            icon={timeSharp}
+            className="bookmark-date-icon"
+            color="light"
+          />
+          <IonText className="bookmark-date-date">
+            {new Date(date).toLocaleDateString()}
+          </IonText>
+        </div>
+      </div>
+    </div>
   );
 };
 

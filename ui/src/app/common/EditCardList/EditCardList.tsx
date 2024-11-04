@@ -16,11 +16,13 @@ import {
 } from "@ionic/react";
 import { ArticleDetails } from "@pages/article-details/ArticleDetails";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export interface CardProps {
   _id: string;
   title: string;
-  date: Date;
+  publishedDate: Date;
+  media: string;
 }
 
 export interface EditCardListProps {
@@ -47,6 +49,7 @@ export const EditCardList = ({
 }: EditCardListProps) => {
   const [presentAlert] = useIonAlert();
   const [editMode, setEditMode] = useState<boolean>(false);
+  const history = useHistory();
 
   const handleEditMode = (checked: boolean) => {
     setEditMode(checked);
@@ -70,13 +73,16 @@ export const EditCardList = ({
     setEditMode(false);
     handleRemoveItem();
   };
+  const onBookmarkClick = (article: any) => {
+    return history.push({ pathname: "/article", state: { article: article } });
+  };
 
   return (
     <IonNav
       root={() => (
         <IonPage>
           <Header title={pageTitle} />
-          <IonContent fullscreen>
+          <IonContent fullscreen className="ion-padding">
             <IonGrid>
               <IonRow className={"ion-padding-vertical"}>
                 <IonToggle
@@ -88,35 +94,41 @@ export const EditCardList = ({
                   Edit
                 </IonToggle>
               </IonRow>
-              {cardItemsData.length>0 ? cardItemsData.map(article => (
-                <IonRow className={"ion-align-items-center"} key={article._id}>
-                  <IonCol
-                    size={editMode ? "11" : "12"}
-                    className={"ion-no-padding ion-padding-bottom"}
+              {cardItemsData.length > 0 ? (
+                cardItemsData.map((article) => (
+                  <IonRow
+                    className={"ion-align-items-center"}
+                    key={article._id}
                   >
-                    <IonNavLink
-                      routerDirection={"forward"}
-                      component={() => (
-                          // @ts-ignore
-                        <ArticleDetails a={article} />
-                      )}
+                    <IonCol
+                      size={editMode ? "11" : "12"}
+                      className={"ion-no-padding ion-padding-bottom"}
+                      onClick={() => onBookmarkClick(article)}
                     >
-                      <CardListItem title={article.title} date={article.date} />
-                    </IonNavLink>
-                  </IonCol>
-                  {editMode && (
-                    <IonCol>
-                      <IonCheckbox
-                        checked={selectedItems[article._id] || false}
-                        onIonChange={(e) =>
-                          handleSelected(article._id, e.detail.checked)
-                        }
-                        data-testid={`${testId.itemCheckbox}-${article._id}`}
-                      ></IonCheckbox>
+                      <CardListItem
+                        title={article.title}
+                        date={article.publishedDate}
+                        media={article.media}
+                      />
                     </IonCol>
-                  )}
+                    {editMode && (
+                      <IonCol>
+                        <IonCheckbox
+                          checked={selectedItems[article._id] || false}
+                          onIonChange={(e) =>
+                            handleSelected(article._id, e.detail.checked)
+                          }
+                          data-testid={`${testId.itemCheckbox}-${article._id}`}
+                        ></IonCheckbox>
+                      </IonCol>
+                    )}
+                  </IonRow>
+                ))
+              ) : (
+                <IonRow className={"ion-justify-content-center"}>
+                  <h2>No Bookmarks</h2>
                 </IonRow>
-              )):(<IonRow className={"ion-justify-content-center"}><h2>No Bookmarks</h2></IonRow>)}
+              )}
               {shouldShowRemoveBtn() ? (
                 <IonRow className={"ion-justify-content-center"}>
                   <Button
