@@ -33,8 +33,7 @@ export const Home: React.FC = () => {
   const [newsArticles, setNewsArticles] = useState<Article[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [page, setPage] = useState(1);
-  // const baseUrl = 'http://localhost:8000/articles/';
-  const baseUrl = "https://threat-watch.onrender.com/articles/";
+  const baseUrl = 'https://threat-watch-backend.vercel.app/articles/';
 
   useEffect(() => {
     const localStorageItem = localStorage.getItem("bookmarkedArticles");
