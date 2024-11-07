@@ -26,14 +26,24 @@ export const ArticleDetails = (a: Article) => {
         <IonGrid>
           <IonRow>
             <p className="article-title">{article.title}</p>
+          </IonRow>
+          <IonRow>
+            <IonText className="article-subtitle">
+              {"Source: "}
+              <a href={"https://" + article.source}>{article.source}</a>
+            </IonText>
+          </IonRow>
+          <IonRow>
             <IonText className="article-subtitle">
               <p>
-                {"Source: "}
-                <a href={"https://" + article.source}>{article.source}</a>
-                <br />
                 {articleDetails.writtenBy}
                 {article.author}
-                <br />
+              </p>
+            </IonText>
+          </IonRow>
+          <IonRow>
+            <IonText className="article-subtitle">
+              <p>
                 {articleDetails.createdDate}
                 {new Date(article.publishedDate).toLocaleString()}
               </p>
