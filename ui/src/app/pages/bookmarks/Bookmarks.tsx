@@ -24,7 +24,7 @@ export const Bookmarks: React.FC = () => {
 
     const getData = async (ids: String[]) => {
       const totalArticles = [];
-      const url = "https://threat-watch.onrender.com/articles/get_one";
+      const url = "https://threat-watch-backend.vercel.app/articles/get_one";
       for (const id of ids) {
         try {
           const response = await axios.get(url, { params: { id: id } });
