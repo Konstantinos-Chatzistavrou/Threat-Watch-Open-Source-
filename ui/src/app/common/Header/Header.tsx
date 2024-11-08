@@ -10,6 +10,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React, { PropsWithChildren } from "react";
+import "./Header.css";
 
 interface HeaderProps {
   title?: string;
@@ -37,7 +38,9 @@ const Header = ({
           )}
           <IonCol>
             {title && (
-              <IonTitle className={"ion-text-center"}>{title}</IonTitle>
+              <IonTitle className={"ion-text-center header-title"}>
+                {title}
+              </IonTitle>
             )}
           </IonCol>
           <IonCol>{children}</IonCol>
