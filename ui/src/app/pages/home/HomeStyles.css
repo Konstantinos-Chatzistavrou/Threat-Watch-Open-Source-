@@ -7,10 +7,20 @@
   position: relative;
   padding-bottom: 10px;
 }
+
 .news-feed-card-star-icon {
   position: absolute;
   top: 10px;
   right: 10px;
+  width: 48px;
+  height: 48px;
+}
+.news-feed-card-share-icon {
+  position: absolute;
+  top: 10px;
+  right: 70px;
+  width: 48px;
+  height: 48px;
 }
 
 .news-feed-card-image {
@@ -27,4 +37,24 @@
 .news-feed-card-author {
   color: var(--ion-color-dark);
   font-size: 14px;
+}
+
+.news-feed-card-link {
+  color: var(--ion-color-dark);
+  font-size: 14px;
+  margin-top: 0;
+}
+.custom-link {
+  display: inline-block;
+  color: var(--ion-color-light);
+  text-decoration: none;
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.custom-link:hover {
+  color: #0056b3;
 }

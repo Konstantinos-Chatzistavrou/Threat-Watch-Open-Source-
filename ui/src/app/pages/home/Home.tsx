@@ -1,4 +1,5 @@
 import { Article } from "@/app/api/articleApi/ArticleTypes";
+import { Share } from "@capacitor/share";
 import { buildElementId } from "@/app/utils/idUtils";
 import gridLockImage from "@assets/grid-lock.jpeg";
 import Button from "@common/Button/Button";
@@ -20,7 +21,7 @@ import {
   IonInfiniteScrollContent,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
-import { sparkles, star, syncCircle } from "ionicons/icons";
+import { sparkles, star, syncCircle, share, shareSocial } from "ionicons/icons";
 
 import { CriticalNews } from "./components/CriticalNews";
 import axios from "axios";
@@ -33,7 +34,7 @@ export const Home: React.FC = () => {
   const [newsArticles, setNewsArticles] = useState<Article[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [page, setPage] = useState(1);
-  const baseUrl = 'https://threat-watch-backend.vercel.app/articles/';
+  const baseUrl = "https://threat-watch-backend.vercel.app/articles/";
 
   useEffect(() => {
     const localStorageItem = localStorage.getItem("bookmarkedArticles");
@@ -135,50 +136,91 @@ export const Home: React.FC = () => {
     }
   };
 
+  const handleShare = async (url: string) => {
+    console.log("share", url);
+    try {
+      await Share.share({
+        title: "Check this out!",
+        text: "I found something interesting to share.",
+        url: url, // URL you want to share
+      });
+      console.log("Shared successfully!");
+    } catch (err) {
+      console.error("Error sharing:", err);
+    }
+  };
+
   const handleSearchChange = () => {};
   // @ts-ignore
-  const renderNews = ({ title, _id, media, isBookmarked, author }: Article) => {
+  const renderNews = ({
+    title,
+    _id,
+    media,
+    isBookmarked,
+    author,
+    url,
+  }: Article) => {
     return (
       <IonCol size="12" key={_id}>
         <IonCard className={"ion-no-margin news-feed-card"}>
-          <div className="news-feed-card-contenet-div">
+          <IonRow className="news-feed-card-contenet-div">
             <img
               alt="security-thumbnail"
               src={media || gridLockImage}
               onClick={() => onArticleClick(_id)}
             />
+          </IonRow>
+          <IonRow>
+            <IonCardTitle
+              onClick={() => onArticleClick(url)}
+              className="ion-padding news-feed-card-title"
+            >
+              {title}
+            </IonCardTitle>
+          </IonRow>
 
-            <div>
-              <IonCardTitle
-                onClick={() => onArticleClick(_id)}
-                className="ion-padding news-feed-card-title"
-              >
-                {title}
-              </IonCardTitle>
-              {author && (
-                <IonText className="news-feed-card-author ion-padding">
-                  By : {author}
-                </IonText>
-              )}
-              <Button
-                type="icon"
-                ariaLabel={`favorite-btn-${_id}`}
-                classes={
-                  "small-square ion-float-bottom news-feed-card-star-icon"
-                }
-                ionButtonProps={{
-                  size: "small",
-                  // shape: "round",
-                  onClick: handleBookmark(_id),
-                }}
-                ionIconProps={{
-                  icon: star,
-                  size: "small",
-                  color: isBookmarked ? "yellow" : "white",
-                }}
-              />
-            </div>
-          </div>
+          {author && (
+            <IonText className="ion-padding news-feed-card-author">
+              {"Author: "}
+              {author}
+            </IonText>
+          )}
+
+          <IonRow>
+            {url && (
+              <IonText className="ion-padding news-feed-card-link">
+                {"Source: "}
+                <a className="custom-link" href={"https://" + url}>
+                  {url}
+                </a>
+              </IonText>
+            )}
+          </IonRow>
+          <Button
+            type="icon"
+            ariaLabel={`share-btn-${_id}`}
+            classes={"ion-float-bottom news-feed-card-share-icon"}
+            ionButtonProps={{
+              onClick: () => handleShare(url),
+            }}
+            ionIconProps={{
+              icon: shareSocial,
+              color: "white",
+            }}
+          />
+          <Button
+            type="icon"
+            ariaLabel={`favorite-btn-${_id}`}
+            classes={"ion-float-bottom news-feed-card-star-icon"}
+            ionButtonProps={{
+              onClick: handleBookmark(_id),
+            }}
+            ionIconProps={{
+              icon: star,
+
+              color: isBookmarked ? "yellow" : "white",
+            }}
+          />
         </IonCard>
       </IonCol>
     );
