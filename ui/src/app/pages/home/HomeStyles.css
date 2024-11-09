@@ -15,6 +15,13 @@
   width: 48px;
   height: 48px;
 }
+.news-feed-card-share-icon {
+  position: absolute;
+  top: 10px;
+  right: 70px;
+  width: 48px;
+  height: 48px;
+}
 
 .news-feed-card-image {
   width: "100%";

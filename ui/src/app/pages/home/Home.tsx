@@ -1,4 +1,5 @@
 import { Article } from "@/app/api/articleApi/ArticleTypes";
+import { Share } from "@capacitor/share";
 import { buildElementId } from "@/app/utils/idUtils";
 import gridLockImage from "@assets/grid-lock.jpeg";
 import Button from "@common/Button/Button";
@@ -20,7 +21,7 @@ import {
   IonInfiniteScrollContent,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
-import { sparkles, star, syncCircle } from "ionicons/icons";
+import { sparkles, star, syncCircle, share, shareSocial } from "ionicons/icons";
 
 import { CriticalNews } from "./components/CriticalNews";
 import axios from "axios";
@@ -135,6 +136,20 @@ export const Home: React.FC = () => {
     }
   };
 
+  const handleShare = async (url: string) => {
+    console.log("share", url);
+    try {
+      await Share.share({
+        title: "Check this out!",
+        text: "I found something interesting to share.",
+        url: url, // URL you want to share
+      });
+      console.log("Shared successfully!");
+    } catch (err) {
+      console.error("Error sharing:", err);
+    }
+  };
+
   const handleSearchChange = () => {};
   // @ts-ignore
   const renderNews = ({
@@ -157,7 +172,7 @@ export const Home: React.FC = () => {
           </IonRow>
           <IonRow>
             <IonCardTitle
-              onClick={() => onArticleClick(_id)}
+              onClick={() => onArticleClick(url)}
               className="ion-padding news-feed-card-title"
             >
               {title}
@@ -181,13 +196,23 @@ export const Home: React.FC = () => {
               </IonText>
             )}
           </IonRow>
-
+          <Button
+            type="icon"
+            ariaLabel={`share-btn-${_id}`}
+            classes={"ion-float-bottom news-feed-card-share-icon"}
+            ionButtonProps={{
+              onClick: () => handleShare(url),
+            }}
+            ionIconProps={{
+              icon: shareSocial,
+              color: "white",
+            }}
+          />
           <Button
             type="icon"
             ariaLabel={`favorite-btn-${_id}`}
             classes={"ion-float-bottom news-feed-card-star-icon"}
             ionButtonProps={{
-              // shape: "round",
               onClick: handleBookmark(_id),
             }}
             ionIconProps={{

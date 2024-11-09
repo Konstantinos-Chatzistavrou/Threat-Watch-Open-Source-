@@ -153,7 +153,7 @@ export const CriticalNews = ({ articles }: CriticalNewsProps) => {
               },
             }}
             ionIconProps={{
-              size: "small",
+              size: "large",
               icon: showSwiper ? caretDownCircle : caretForwardCircle,
             }}
           ></Button>
