@@ -182,23 +182,20 @@ export const Home: React.FC = () => {
             )}
           </IonRow>
 
-          <div>
-            <Button
-              type="icon"
-              ariaLabel={`favorite-btn-${_id}`}
-              classes={"small-square ion-float-bottom news-feed-card-star-icon"}
-              ionButtonProps={{
-                size: "small",
-                // shape: "round",
-                onClick: handleBookmark(_id),
-              }}
-              ionIconProps={{
-                icon: star,
-                size: "small",
-                color: isBookmarked ? "yellow" : "white",
-              }}
-            />
-          </div>
+          <Button
+            type="icon"
+            ariaLabel={`favorite-btn-${_id}`}
+            classes={"ion-float-bottom news-feed-card-star-icon"}
+            ionButtonProps={{
+              // shape: "round",
+              onClick: handleBookmark(_id),
+            }}
+            ionIconProps={{
+              icon: star,
+
+              color: isBookmarked ? "yellow" : "white",
+            }}
+          />
         </IonCard>
       </IonCol>
     );
