@@ -159,6 +159,8 @@ export const Home: React.FC = () => {
     isBookmarked,
     author,
     url,
+
+    source,
   }: Article) => {
     return (
       <IonCol size="12" key={_id}>
@@ -190,8 +192,8 @@ export const Home: React.FC = () => {
             {url && (
               <IonText className="ion-padding news-feed-card-link">
                 {"Source: "}
-                <a className="custom-link" href={"https://" + url}>
-                  {url}
+                <a className="custom-link" href={"https://" + source}>
+                  {source}
                 </a>
               </IonText>
             )}
