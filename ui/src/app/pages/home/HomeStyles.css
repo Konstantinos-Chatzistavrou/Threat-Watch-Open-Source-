@@ -28,3 +28,23 @@
   color: var(--ion-color-dark);
   font-size: 14px;
 }
+
+.news-feed-card-link {
+  color: var(--ion-color-dark);
+  font-size: 14px;
+  margin-top: 0;
+}
+.custom-link {
+  display: inline-block;
+  color: var(--ion-color-light);
+  text-decoration: none;
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.custom-link:hover {
+  color: #0056b3;
+}

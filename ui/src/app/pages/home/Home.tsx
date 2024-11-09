@@ -33,7 +33,7 @@ export const Home: React.FC = () => {
   const [newsArticles, setNewsArticles] = useState<Article[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [page, setPage] = useState(1);
-  const baseUrl = 'https://threat-watch-backend.vercel.app/articles/';
+  const baseUrl = "https://threat-watch-backend.vercel.app/articles/";
 
   useEffect(() => {
     const localStorageItem = localStorage.getItem("bookmarkedArticles");
@@ -137,47 +137,67 @@ export const Home: React.FC = () => {
 
   const handleSearchChange = () => {};
   // @ts-ignore
-  const renderNews = ({ title, _id, media, isBookmarked, author }: Article) => {
+  const renderNews = ({
+    title,
+    _id,
+    media,
+    isBookmarked,
+    author,
+    url,
+  }: Article) => {
     return (
       <IonCol size="12" key={_id}>
         <IonCard className={"ion-no-margin news-feed-card"}>
-          <div className="news-feed-card-contenet-div">
+          <IonRow className="news-feed-card-contenet-div">
             <img
               alt="security-thumbnail"
               src={media || gridLockImage}
               onClick={() => onArticleClick(_id)}
             />
+          </IonRow>
+          <IonRow>
+            <IonCardTitle
+              onClick={() => onArticleClick(_id)}
+              className="ion-padding news-feed-card-title"
+            >
+              {title}
+            </IonCardTitle>
+          </IonRow>
 
-            <div>
-              <IonCardTitle
-                onClick={() => onArticleClick(_id)}
-                className="ion-padding news-feed-card-title"
-              >
-                {title}
-              </IonCardTitle>
-              {author && (
-                <IonText className="news-feed-card-author ion-padding">
-                  By : {author}
-                </IonText>
-              )}
-              <Button
-                type="icon"
-                ariaLabel={`favorite-btn-${_id}`}
-                classes={
-                  "small-square ion-float-bottom news-feed-card-star-icon"
-                }
-                ionButtonProps={{
-                  size: "small",
-                  // shape: "round",
-                  onClick: handleBookmark(_id),
-                }}
-                ionIconProps={{
-                  icon: star,
-                  size: "small",
-                  color: isBookmarked ? "yellow" : "white",
-                }}
-              />
-            </div>
+          {author && (
+            <IonText className="ion-padding news-feed-card-author">
+              {"Author: "}
+              {author}
+            </IonText>
+          )}
+
+          <IonRow>
+            {url && (
+              <IonText className="ion-padding news-feed-card-link">
+                {"Source: "}
+                <a className="custom-link" href={"https://" + url}>
+                  {url}
+                </a>
+              </IonText>
+            )}
+          </IonRow>
+
+          <div>
+            <Button
+              type="icon"
+              ariaLabel={`favorite-btn-${_id}`}
+              classes={"small-square ion-float-bottom news-feed-card-star-icon"}
+              ionButtonProps={{
+                size: "small",
+                // shape: "round",
+                onClick: handleBookmark(_id),
+              }}
+              ionIconProps={{
+                icon: star,
+                size: "small",
+                color: isBookmarked ? "yellow" : "white",
+              }}
+            />
           </div>
         </IonCard>
       </IonCol>
