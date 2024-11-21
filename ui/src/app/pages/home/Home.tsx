@@ -18,7 +18,7 @@ import {
   IonSearchbar,
   IonText,
   IonInfiniteScroll,
-  IonInfiniteScrollContent,
+  IonInfiniteScrollContent, SearchbarInputEventDetail,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { sparkles, star, syncCircle, share, shareSocial } from "ionicons/icons";
@@ -26,6 +26,7 @@ import { sparkles, star, syncCircle, share, shareSocial } from "ionicons/icons";
 import { CriticalNews } from "./components/CriticalNews";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { IonSearchbarCustomEvent } from "@ionic/core";
 
 export const Home: React.FC = () => {
   const history = useHistory();
@@ -54,38 +55,38 @@ export const Home: React.FC = () => {
     const url = baseUrl + "latest";
     const bookmarkedArticles = bookmarks;
     axios
-      .get(url)
-      .then((r: any) => {
-        const newArticles = r.data.map((a: any) => {
-          if (bookmarkedArticles.includes(a._id)) {
-            a.isBookmarked = true;
-          }
-          a.isBookmarked = false;
-          return a;
-        });
-        setCriticalArticles(newArticles);
-      })
-      .catch((err) => console.log(err));
+        .get(url)
+        .then((r: any) => {
+          const newArticles = r.data.map((a: any) => {
+            if (bookmarkedArticles.includes(a._id)) {
+              a.isBookmarked = true;
+            }
+            a.isBookmarked = false;
+            return a;
+          });
+          setCriticalArticles(newArticles);
+        })
+        .catch((err) => console.log(err));
   }, []);
 
   const getNewsArticles = () => {
     const url = baseUrl + "get";
     const bookmarkedArticles = bookmarks;
     axios
-      .get(url, { params: { page: page } })
-      .then((r: any) => {
-        const newArticles = r.data.map((a: any) => {
-          if (bookmarkedArticles.includes(a._id)) {
-            a.isBookmarked = true;
-          }
-          a.isBookmarked = false;
-          return a;
-        });
-        const articlesNew = [...newsArticles, ...newArticles];
-        setNewsArticles(articlesNew);
-        console.log(articlesNew);
-      })
-      .catch((err) => console.log(err));
+        .get(url, {params: {page: page}})
+        .then((r: any) => {
+          const newArticles = r.data.map((a: any) => {
+            if (bookmarkedArticles.includes(a._id)) {
+              a.isBookmarked = true;
+            }
+            a.isBookmarked = false;
+            return a;
+          });
+          const articlesNew = [...newsArticles, ...newArticles];
+          setNewsArticles(articlesNew);
+          console.log(articlesNew);
+        })
+        .catch((err) => console.log(err));
     setPage(page + 1);
   };
 
@@ -93,9 +94,9 @@ export const Home: React.FC = () => {
     const bookmarkedArticles = bookmarks;
     const newsArticlesCopy = newsArticles.map((article) => {
       if (bookmarkedArticles.includes(article._id)) {
-        return { ...article, isBookmarked: true };
+        return {...article, isBookmarked: true};
       }
-      return { ...article, isBookmarked: false };
+      return {...article, isBookmarked: false};
     });
     setNewsArticles(newsArticlesCopy);
   };
@@ -106,12 +107,10 @@ export const Home: React.FC = () => {
     }
   }, [bookmarks, isFetching]);
 
-  // TODO: Implement search functionality
-
   const onArticleClick = (id: string) => {
     console.log(id);
     const article = newsArticles.find((article) => article._id === id);
-    return history.push({ pathname: "/article", state: { article: article } });
+    return history.push({pathname: "/article", state: {article: article}});
   };
 
   const handleBookmark = (id: string) => () => {
@@ -119,18 +118,18 @@ export const Home: React.FC = () => {
     if (!bookmarks.includes(id)) {
       const bookmarkedArticles = [id, ...bookmarks];
       localStorage.setItem(
-        "bookmarkedArticles",
-        JSON.stringify(bookmarkedArticles)
+          "bookmarkedArticles",
+          JSON.stringify(bookmarkedArticles)
       );
       setBookmarks(bookmarkedArticles);
     } else {
       let bookmarkedArticles = bookmarks;
       bookmarkedArticles = bookmarkedArticles?.filter(
-        (articleId: string) => articleId !== id
+          (articleId: string) => articleId !== id
       );
       localStorage.setItem(
-        "bookmarkedArticles",
-        JSON.stringify(bookmarkedArticles)
+          "bookmarkedArticles",
+          JSON.stringify(bookmarkedArticles)
       );
       setBookmarks(bookmarkedArticles);
     }
@@ -150,7 +149,16 @@ export const Home: React.FC = () => {
     }
   };
 
-  const handleSearchChange = () => {};
+  const handleSearchChange = (e: IonSearchbarCustomEvent<SearchbarInputEventDetail>) => {
+    const q=e.detail?.value;
+    const url = baseUrl + "search";
+    axios.get(url, {params: {q: q}}).then((r: any) => {
+      const searchResults = r.data;
+      // console.log(searchResults);
+      // Handle search results
+    }).catch(err=>console.log(err));
+  };
+
   // @ts-ignore
   const renderNews = ({
     title,
@@ -258,7 +266,7 @@ export const Home: React.FC = () => {
                 animated={true}
                 placeholder={homeContent.searchPlaceholder}
                 debounce={500}
-                onIonInput={handleSearchChange}
+                onIonInput={(e)=>handleSearchChange(e)}
                 className={"custom"}
               ></IonSearchbar>
             </IonCol>
