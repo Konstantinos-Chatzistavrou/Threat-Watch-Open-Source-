@@ -19,6 +19,7 @@ import {
   IonText,
   IonInfiniteScroll,
   IonInfiniteScrollContent,
+  SearchbarInputEventDetail,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
 import { sparkles, star, syncCircle, share, shareSocial } from "ionicons/icons";
@@ -26,12 +27,15 @@ import { sparkles, star, syncCircle, share, shareSocial } from "ionicons/icons";
 import { CriticalNews } from "./components/CriticalNews";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { IonSearchbarCustomEvent } from "@ionic/core";
 
 export const Home: React.FC = () => {
   const history = useHistory();
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [criticalArticles, setCriticalArticles] = useState<Article[]>([]);
   const [newsArticles, setNewsArticles] = useState<Article[]>([]);
+  const [currentNewsArticles, setCurrentNewsArticles] = useState<Article[]>([]);
+  const [searchString, setSearchString] = useState<string>("");
   const [isFetching, setIsFetching] = useState(true);
   const [page, setPage] = useState(1);
   const baseUrl = "https://threat-watch-backend.vercel.app/articles/";
@@ -83,7 +87,8 @@ export const Home: React.FC = () => {
         });
         const articlesNew = [...newsArticles, ...newArticles];
         setNewsArticles(articlesNew);
-        console.log(articlesNew);
+        setCurrentNewsArticles(articlesNew);
+        console.log("articlesNew", articlesNew);
       })
       .catch((err) => console.log(err));
     setPage(page + 1);
@@ -106,11 +111,9 @@ export const Home: React.FC = () => {
     }
   }, [bookmarks, isFetching]);
 
-  // TODO: Implement search functionality
-
   const onArticleClick = (id: string) => {
     console.log(id);
-    const article = newsArticles.find((article) => article._id === id);
+    const article = currentNewsArticles.find((article) => article._id === id);
     return history.push({ pathname: "/article", state: { article: article } });
   };
 
@@ -150,7 +153,26 @@ export const Home: React.FC = () => {
     }
   };
 
-  const handleSearchChange = () => {};
+  const handleSearchChange = (
+    e: IonSearchbarCustomEvent<SearchbarInputEventDetail>
+  ) => {
+    const q = e.detail?.value;
+    if (q === "") {
+      setCurrentNewsArticles(newsArticles);
+      return;
+    }
+    const url = baseUrl + `search?q=${q}`;
+    axios
+      .get(url)
+      .then((r: any) => {
+        const searchResults = r.data;
+        console.log("searchResults", searchResults);
+        // Handle search results
+        setCurrentNewsArticles(searchResults);
+      })
+      .catch((err) => console.log(err));
+  };
+
   // @ts-ignore
   const renderNews = ({
     title,
@@ -258,7 +280,7 @@ export const Home: React.FC = () => {
                 animated={true}
                 placeholder={homeContent.searchPlaceholder}
                 debounce={500}
-                onIonInput={handleSearchChange}
+                onIonInput={(e) => handleSearchChange(e)}
                 className={"custom"}
               ></IonSearchbar>
             </IonCol>
@@ -282,7 +304,7 @@ export const Home: React.FC = () => {
             </IonText>
           </IonRow>
           <IonRow>
-            {newsArticles.map((article) => renderNews(article))}
+            {currentNewsArticles.map((article) => renderNews(article))}
 
             <IonInfiniteScroll
               onIonInfinite={(ev) => {
