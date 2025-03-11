@@ -19,9 +19,6 @@
 # Threat-Watch
 The privacy focused cybersecurity news app. Project's official website: [Threat Watch: Where news meet privacy](https://threat-watch-project.rf.gd/)
 
-<p align="center">
-<a href="https://ibb.co/qx6604P"><img src="https://i.ibb.co/qx6604P/IMG-20230905-000015.png" alt="IMG-20230905-000015" border="0" /></a>
-
 
 ## Table of Contents
 
