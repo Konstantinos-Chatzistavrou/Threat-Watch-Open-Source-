@@ -34,9 +34,7 @@ We appreciate the contributions made to this version of the app. Please note tha
 
 **License used:**
 
-The name: "Threat-Watch Open Source" is licensed under the:
-
-Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)
+The name: "Threat-Watch" and the logo is now copyrighted for the new for profit, by Konstantinos Chatzistavrou.
 
 
 ---
