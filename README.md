@@ -14,7 +14,7 @@
 
 # Threat-Watch Open Source (Archived)
 
-This repository hosts the **open-source version** of the **Threat-Watch** app. It is **no longer actively maintained**. The project has been transitioned to a professional, **for-profit** model, and future development will take place in a proprietary environment.
+This repository hosts the **open-source version** of the **Threat-Watch** app. It is **no longer actively maintained**. The project has been transitioned to a professional, **for-profit** model, and future development will take place in a proprietary environment. The new website is: https://threat-watch.com
 
 We appreciate the contributions made to this version of the app. Please note that this project is now archived, and no further updates will be made here unless it's revived by the community. The code of this repository will stay untouched according to the AGPL and won't be used for the proprietary version of the app.
 
